@@ -110,3 +110,35 @@ int compareStrings(StringBuffer *str1, StringBuffer *str2) {
 
     return 0;
 };
+
+// TODO: Handle utf-8 characters.
+int capitalizeString(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsLetter(string->string[i]) == 0) string->string[i] -= ASCII_SPACE_BETWEEN_LETTERS;
+    };
+
+    return 1;
+};
+
+// TODO: Handle utf-8 characters.
+int casefoldString(StringBuffer *string) {
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsLetter(string->string[i]) == 1) string->string[i] += ASCII_SPACE_BETWEEN_LETTERS;
+    };
+
+    return 1;
+};
+
+// TODO: Handle utf-8 characters.
+int characterIsLetter(char ch) {
+
+    if(ch >= 65 && ch <= 90) return UPPER_CASE_LETTER;
+    if(ch >= 97 && ch <= 122) return LOWER_CASE_LETTER;
+
+    return NOT_A_LETTER;
+};
