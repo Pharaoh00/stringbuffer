@@ -142,3 +142,9 @@ int characterIsLetter(char ch) {
 
     return NOT_A_LETTER;
 };
+
+int characterIsNumber(char ch) {
+    if(ch >= 48 && ch <= 57) return 1;
+
+    return 0;
+};

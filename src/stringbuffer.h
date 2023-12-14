@@ -25,5 +25,6 @@ int overrideString(char *str, StringBuffer *string);
 int capitalizeString(StringBuffer *string);
 int casefoldString(StringBuffer *string);
 int characterIsLetter(char ch);
+int characterIsNumber(char ch);
 
 #endif // _STRING_BUFFER_H_
