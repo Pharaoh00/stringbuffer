@@ -22,8 +22,8 @@ StringBuffer *initializeStringWithCharacters(char *str);
 int concatenateStrings(char* str, StringBuffer *string);
 int compareStrings(StringBuffer *str1, StringBuffer *str2);
 int overrideString(char *str, StringBuffer *string);
-int capitalizeString(StringBuffer *string);
-int casefoldString(StringBuffer *string);
+int upperCaseString(StringBuffer *string);
+int lowerCaseString(StringBuffer *string);
 int characterIsLetter(char ch);
 int characterIsNumber(char ch);
 

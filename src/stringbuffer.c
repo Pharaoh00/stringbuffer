@@ -112,7 +112,7 @@ int compareStrings(StringBuffer *str1, StringBuffer *str2) {
 };
 
 // TODO: Handle utf-8 characters.
-int capitalizeString(StringBuffer *string) {
+int upperCaseString(StringBuffer *string) {
 
     if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
 
@@ -124,7 +124,7 @@ int capitalizeString(StringBuffer *string) {
 };
 
 // TODO: Handle utf-8 characters.
-int casefoldString(StringBuffer *string) {
+int lowerCaseString(StringBuffer *string) {
     if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
 
     for(int i = 0; i < string->length; i++) {
