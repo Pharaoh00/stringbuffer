@@ -2,10 +2,16 @@
 
 StringBuffer *initializeString(size_t capacity) {
     StringBuffer *tmp  = (StringBuffer*)malloc(sizeof(StringBuffer));
+    if(tmp == NULL) return -1;
+
     tmp->string = (char*)malloc(capacity+1);
+    if(tmp->string == NULL) return -1;
+
     memset(tmp->string, '\0', capacity+1);
     tmp->length = 0;
     tmp->capacity = capacity+1;
+
+    return tmp;
 };
 
 StringBuffer *initializeStringWithCharacters(char *str) {
@@ -15,13 +21,18 @@ StringBuffer *initializeStringWithCharacters(char *str) {
     size_t str_length = strlen(str);
 
     StringBuffer *tmp  = (StringBuffer*)malloc(sizeof(StringBuffer));
+    if(tmp == NULL) return -1;
+
     tmp->string = (char*)malloc(str_length + 1);
+    if(tmp->string == NULL) return -1;
 
     memcpy(tmp->string, str, str_length);
     tmp->string[str_length] = '\0';
 
     tmp->length = str_length;
     tmp->capacity = str_length + 1;
+
+    return tmp;
 };
 
 int overrideString(char *str, StringBuffer *string) {
@@ -33,7 +44,7 @@ int overrideString(char *str, StringBuffer *string) {
 
     if(new_capacity > string->capacity) {
         char *new_string = (char*)malloc(new_capacity);
-        if(!new_string) return -1;
+        if(new_string == NULL) return -1;
 
         memcpy(new_string, str, str_length);
 
@@ -60,7 +71,7 @@ int overrideString(char *str, StringBuffer *string) {
 
 int concatenateStrings(char* str, StringBuffer *string) {
 
-    if(!string->string) return -1;
+    if(string == NULL || string->capacity == 0 || string->string == NULL || string->length == 0 || str == NULL || str[0] == '\0') return -1;
 
     size_t str_length = strlen(str);
     size_t new_capacity =  str_length + string->length + 1;
@@ -68,26 +79,26 @@ int concatenateStrings(char* str, StringBuffer *string) {
     if(new_capacity > string->capacity) {
 
         char *new_string = (char*)malloc(new_capacity);
-        if(!new_string) return -1;
+        if(new_string == NULL) return -1;
 
         memcpy(new_string, string->string, string->length);
         memcpy(new_string + string->length, str, new_capacity - string->length - 1);
 
         free(string->string);
 
-        string->string = new_string;
-        string->string[str_length] = '\0';
-
         string->capacity = new_capacity;
         string->length = str_length;
+
+        string->string = new_string;
+        string->string[str_length] = '\0';
 
         return 1;
     };
 
     memcpy(string->string + string->length, str, str_length);
     
-    string->string[str_length] = '\0';
     string->length = str_length;
+    string->string[str_length] = '\0';
 
     return 1;
 };
@@ -230,6 +241,7 @@ int stripString(StringBuffer *string) {
     if(string == NULL || string->capacity == 0 || string->length == 0 || string->string == NULL) return -1;
 
     char *tmp = (char*)malloc(string->capacity);
+    if(tmp == NULL) return -1;
 
     int striped_index = 0;
 
@@ -249,4 +261,21 @@ int stripString(StringBuffer *string) {
 
     return 1;
 
+};
+
+int resizeCapacity(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->length == 0 || string->string == NULL) return -1;
+
+    char *tmp = (char*)malloc(string->length+1);
+    if(tmp == NULL) return -1;
+
+    memcpy(tmp, string->string, string->length);
+    tmp[string->length] = '\0';
+
+    free(string->string);
+
+    string->string = tmp;
+
+    return 1;
 };

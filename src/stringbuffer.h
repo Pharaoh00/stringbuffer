@@ -36,5 +36,6 @@ int stringIsLowerCase(StringBuffer *string);
 int stringIsupperCase(StringBuffer *string);
 ssize_t findCharacter(char *ch, StringBuffer *string);
 int stripString(StringBuffer *string);
+int resizeCapacity(StringBuffer *string);
 
 #endif // _STRING_BUFFER_H_
