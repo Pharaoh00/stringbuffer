@@ -144,7 +144,108 @@ int characterIsLetter(char ch) {
 };
 
 int characterIsNumber(char ch) {
+
     if(ch >= 48 && ch <= 57) return 1;
 
     return 0;
+};
+
+int characterIsSpace(char ch) {
+
+    if(ch == 32) return 1;
+
+    return 0;
+};
+
+// TODO: Handle utf-8 characters.
+int stringIsAlpha(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsLetter(string->string[i]) == -1) return 0;
+    };
+
+    return 1;
+
+};
+
+// TODO: Handle utf-8 characters.
+int stringIsAscii(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;   
+
+    for(int i = 0; i < string->length; i++) {
+        if(string->string[i] > 127) return 0;
+    };
+
+    return 1;
+};
+
+int stringIsNumber(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsNumber(string->string[i]) == 0) return 0;
+    };
+
+    return 1;
+};
+
+int stringIsLowerCase(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsLetter(string->string[i]) != LOWER_CASE_LETTER) return 0;
+    };
+
+    return 1;
+};
+
+int stringIsupperCase(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL) return -1;
+
+    for(int i = 0; i < string->length; i++) {
+        if(characterIsLetter(string->string[i]) != UPPER_CASE_LETTER) return 0;
+    };
+
+    return 1;
+};
+
+ssize_t findCharacter(char *ch, StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->string == NULL || string->length == 0 || ch == NULL || ch[0] == '\0') return -1;
+
+    char *pointer = memchr(string->string, ch[0], string->length);
+    if(pointer == NULL) return -1;
+
+    return pointer - string->string;
+};
+
+int stripString(StringBuffer *string) {
+
+    if(string == NULL || string->capacity == 0 || string->length == 0 || string->string == NULL) return -1;
+
+    char *tmp = (char*)malloc(string->capacity);
+
+    int striped_index = 0;
+
+    for(int i = 0; i < string->length; i++) {
+        if(!isspace(string->string[i])) {
+            tmp[striped_index] = string->string[i];
+            striped_index++;
+        };
+    };
+
+    tmp[striped_index] = '\0';
+
+    free(string->string);
+
+    string->string = tmp;
+
+    return 1;
+
 };

@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <ctype.h>
 
 #define ASCII_SPACE_BETWEEN_LETTERS 32
 #define UPPER_CASE_LETTER 1
@@ -26,5 +28,13 @@ int upperCaseString(StringBuffer *string);
 int lowerCaseString(StringBuffer *string);
 int characterIsLetter(char ch);
 int characterIsNumber(char ch);
+int characterIsSpace(char ch);
+int stringIsAlpha(StringBuffer *string);
+int stringIsAscii(StringBuffer *string);
+int stringIsNumber(StringBuffer *string);
+int stringIsLowerCase(StringBuffer *string);
+int stringIsupperCase(StringBuffer *string);
+ssize_t findCharacter(char *ch, StringBuffer *string);
+int stripString(StringBuffer *string);
 
 #endif // _STRING_BUFFER_H_
