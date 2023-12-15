@@ -245,6 +245,7 @@ int stripString(StringBuffer *string) {
     free(string->string);
 
     string->string = tmp;
+    string->length = striped_index;
 
     return 1;
 
