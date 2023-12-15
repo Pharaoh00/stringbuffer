@@ -21,6 +21,7 @@ typedef struct String {
 
 StringBuffer *initializeString(size_t capacity);
 StringBuffer *initializeStringWithCharacters(char *str);
+int freeString(StringBuffer *input);
 int concatenateStrings(char* str, StringBuffer *string);
 int compareStrings(StringBuffer *str1, StringBuffer *str2);
 int overrideString(char *str, StringBuffer *string);
@@ -37,5 +38,6 @@ int stringIsupperCase(StringBuffer *string);
 ssize_t findCharacter(char *ch, StringBuffer *string);
 int stripString(StringBuffer *string);
 int resizeCapacity(StringBuffer *string);
+StringBuffer **splitString(StringBuffer *string, char delimiter);
 
 #endif // _STRING_BUFFER_H_

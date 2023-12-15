@@ -2,10 +2,10 @@
 
 StringBuffer *initializeString(size_t capacity) {
     StringBuffer *tmp  = (StringBuffer*)malloc(sizeof(StringBuffer));
-    if(tmp == NULL) return -1;
+    if(tmp == NULL) return NULL;
 
     tmp->string = (char*)malloc(capacity+1);
-    if(tmp->string == NULL) return -1;
+    if(tmp->string == NULL) return NULL;
 
     memset(tmp->string, '\0', capacity+1);
     tmp->length = 0;
@@ -21,10 +21,10 @@ StringBuffer *initializeStringWithCharacters(char *str) {
     size_t str_length = strlen(str);
 
     StringBuffer *tmp  = (StringBuffer*)malloc(sizeof(StringBuffer));
-    if(tmp == NULL) return -1;
+    if(tmp == NULL) return NULL;
 
     tmp->string = (char*)malloc(str_length + 1);
-    if(tmp->string == NULL) return -1;
+    if(tmp->string == NULL) return NULL;
 
     memcpy(tmp->string, str, str_length);
     tmp->string[str_length] = '\0';
@@ -33,6 +33,17 @@ StringBuffer *initializeStringWithCharacters(char *str) {
     tmp->capacity = str_length + 1;
 
     return tmp;
+};
+
+int freeString(StringBuffer *input) {
+
+    if(input == NULL || input->string == NULL) return -1;
+
+    free(input->string);
+    free(input);
+    input = NULL;
+
+    return 1;
 };
 
 int overrideString(char *str, StringBuffer *string) {
@@ -278,4 +289,44 @@ int resizeCapacity(StringBuffer *string) {
     string->string = tmp;
 
     return 1;
+};
+
+StringBuffer** splitString(StringBuffer* input, char delimiter) {
+    if (input == NULL || input->string == NULL || input->length == 0) return NULL;
+
+    size_t how_many_splits = 1;
+    for (size_t i = 0; i < input->length; i++) {
+        if (input->string[i] == delimiter) how_many_splits++;
+    };
+
+    StringBuffer** tokens = (StringBuffer**)malloc((how_many_splits + 1) * sizeof(StringBuffer*));
+    if (tokens == NULL) return NULL;
+
+    size_t token_index = 0;
+    size_t token_start = 0;
+
+    for (size_t i = 0; i <= input->length; i++) {
+        if (input->string[i] == delimiter || i == input->length) {
+            
+            size_t tokenLength = i - token_start;
+            tokens[token_index] = initializeString(tokenLength);
+            if (tokens[token_index] == NULL) {
+                
+                for (size_t j = 0; j < token_index; j++) {
+                    freeString(tokens[j]);
+                };
+                free(tokens);
+                return NULL;
+            };
+
+            memcpy(tokens[token_index]->string, input->string + token_start, tokenLength);
+            tokens[token_index]->length = tokenLength;
+
+            token_start = i + 1;
+            token_index++;
+        };
+    };
+
+    tokens[how_many_splits] = NULL;
+    return tokens;
 };
