@@ -299,7 +299,7 @@ StringBuffer** splitString(StringBuffer* input, char delimiter) {
         if (input->string[i] == delimiter) how_many_splits++;
     };
 
-    StringBuffer** tokens = (StringBuffer**)malloc((how_many_splits + 1) * sizeof(StringBuffer*));
+    StringBuffer** tokens = (StringBuffer**)malloc((how_many_splits + 1) * sizeof(StringBuffer));
     if (tokens == NULL) return NULL;
 
     size_t token_index = 0;
